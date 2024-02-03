@@ -1,0 +1,22 @@
+<!--  наследуемся от шаблона default.html, который мы создавали для flatpages -->
+{% extends 'simpleapp/default.html' %}
+
+<!-- Название у нас будет Product -->
+{% block title %}
+Product
+{% endblock title %}
+
+<!-- В контенте на странице мы выводим сам товар, идентификатор которого был передан в url -->
+{% block content %}
+<h1>Товар</h1>
+<p><h2>{{ product.name }} {{ product.category }}</h2></p>
+<h3>{{ product.discription }}</h3>
+{# Добавим кнопку редактирования товара #}
+<p>
+   <a href="{% url 'product_update' product.pk %}" class="btn btn-primary">Редактировать товар</a>
+</p>
+{# Добавим кнопку удаления товара #}
+<p>
+   <a href="{% url 'product_delete' product.pk %}" class="btn btn-primary">Удалить товар</a>
+</p>
+{% endblock content %}
