@@ -13,10 +13,14 @@ Product
 <h3>{{ product.discription }}</h3>
 {# Добавим кнопку редактирования товара #}
 <p>
+   {% if perms.simpleapp.change_product %}
    <a href="{% url 'product_update' product.pk %}" class="btn btn-primary">Редактировать товар</a>
+   {% endif %}
 </p>
 {# Добавим кнопку удаления товара #}
 <p>
+   {% if perms.simpleapp.delete_product %}
    <a href="{% url 'product_delete' product.pk %}" class="btn btn-primary">Удалить товар</a>
+   {% endif %}
 </p>
 {% endblock content %}

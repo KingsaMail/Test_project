@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from datetime import datetime
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Product
@@ -43,8 +43,8 @@ class ProductDetailView(DetailView):
 
 
 # Добавляем новое представление для создания товаров.
-class ProductCreate(LoginRequiredMixin, CreateView):
-    raise_exception = True
+class ProductCreate(PermissionRequiredMixin, CreateView):
+    permission_required = ('simpleapp.add_product',)
     # Указываем нашу разработанную форму
     form_class = ProductForm
     # модель товаров
@@ -54,16 +54,16 @@ class ProductCreate(LoginRequiredMixin, CreateView):
     
 
 # Добавляем представление для изменения товара.
-class ProductUpdate(LoginRequiredMixin, UpdateView):
-    raise_exception = True
+class ProductUpdate(PermissionRequiredMixin, UpdateView):
+    permission_required = ('simpleapp.change_product',)
     form_class = ProductForm
     model = Product
     template_name = 'product_edit.html'
 
 
 # Представление удаляющее товар.
-class ProductDelete(LoginRequiredMixin, DeleteView):
-    raise_exception = True
+class ProductDelete(PermissionRequiredMixin, DeleteView):
+    permission_required = ('simpleapp.delete_product',)
     model = Product
     template_name = 'product_delete.html'
     success_url = reverse_lazy('product_list')
